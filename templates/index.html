@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Basic Image Retrieval Project</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="static/css/util.css">
+    <link rel="stylesheet" type="text/css" href="static/css/main.css">
+    <link rel="stylesheet" type="text/css" href="static/css/files.css">
+    <style>
+        #ïmag {
+            padding-left: 10px;
+            padding-right: 10px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            float: center;
+            width: 30%;
+        }
+
+        #input {
+            font-family: Poppins-Medium;
+            font-size: 15px;
+            line-height: 1.5;
+            color: #666666;
+            visibility: visible;
+            display: block;
+            width: 100%;
+            background: #e6e6e6;
+            height: 50px;
+            border-radius: 25px;
+            padding: 0 30px 0 68px;
+        }
+    </style>
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelector('#upload').onsubmit = () => {
+            const text = document.querySelector('#input').value;
+            document.querySelector('#text').innerHTML = text.toUpperCase(text);
+            return false;
+        };
+    });
+    </script>
+    <!--===============================================================================================-->
+</head>
+
+<body>
+    <div class="limiter">
+        <div class="container-login100">
+            <div class="wrap-login100">
+                <div class="wrap-title">
+                    <span class="login100-form-mytitle">
+                        Image Prediction
+                    </span>
+                </div>
+                <div class="login100-pic js-tilt" data-tilt>
+                    <img id="image-preview" alt="image preview" />
+                </div>
+
+                <!--query by upload -->
+                <form class="login100-form validate-form" method=post enctype=multipart/form-data> <span
+                    class="login100-form-title">
+                    Upload an Image File
+                    </span>
+                    <div class="container-login100-form-btn">
+                        <div class="wrap-input100 validate-input" data-validate="Image file is required" id="input">
+                            <input class="input100" id="image-source" name="file" onchange="previewImage();" type="file"
+                                alt="Input Image" accept="image/jpeg,image/jpg,image/png">
+                            <span class="focus-input100"></span>
+                            <span class="symbol-input100">
+                                <i class="fa fa-file" aria-hidden="true"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="container-login100-form-btn">
+                        <button class="login100-form-btn" type="submit">
+                            Process
+                        </button>
+                    </div>
+                </form>
+                <!--query by upload -->
+
+                <!-- sample query -->
+                <br><br><br><br><br>
+                    <h2 style="padding-left: 10px;">
+                        Select Sample Query
+                    </h2>
+
+                <section class="contact-section centred" style="padding-top:10px;" id="predict2">
+                    <div class="container">
+                        <table>
+                            <tr>
+                                <td>
+                                    <form action="{{ url_for('cc_predict')}}" method="post">
+                                        <div class="row" style="padding-bottom: 1%;">
+                                            <div class="column">
+                                                <input type="hidden" name="input_image" id="count" value="static/sample/find1.jpg" />
+                                                <input type="image" name="submit" onclick="change('static/sample/find1.jpg')" style="height: 150px;width: 235px;padding-left: 10%;" src="{{ url_for('static', filename='sample/find1.jpg')}}"/>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </td>
+                                <td>
+                                    <form action="{{ url_for('cc_predict')}}" method="post">
+                                        <div class="row" style="padding-bottom: 1%;">
+                                            <div class="column">
+                                                <input type="hidden" name="input_image" id="count" value="static/sample/find2.jpg" />
+                                                <input type="image" name="submit" onclick="change('static/sample/find2.jpg')" style="height: 150px;width: 235px;padding-left: 10%;" src="{{ url_for('static', filename='sample/find2.jpg')}}"/>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </td>
+                                <td>
+                                    <form action="{{ url_for('cc_predict')}}" method="post">
+                                        <div class="row" style="padding-bottom: 1%;">
+                                            <div class="column">
+                                                <input type="hidden" name="input_image" id="count" value="static/sample/find3.jpg" />
+                                                <input type="image" name="submit" onclick="change('static/sample/find3.jpg')" style="height: 150px;width: 235px;padding-left: 10%;" src="{{ url_for('static', filename='sample/find3.jpg')}}"/>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </td>
+                            </tr>
+                         </table>
+                    </div>
+                </section>
+
+                <!-- sample query end -->
+
+                <div class="wrap-title"><br><br><br><br>
+                    <span class="login100-form-mytitle">
+                        Prediction Result: {{prediction_text}}
+                    </span>
+                    <h1 style="padding-left: 10px;">
+                        Last Query Image
+                    </h1>
+                </div>
+                <div>
+                    <img style="padding-left: 10px;padding-top: 10px;padding-bottom: 10px;width: 70%;"
+                        src="../static/uploads/queryImg.jpg" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $('.js-tilt').tilt({
+            scale: 1.1
+        })
+    </script>
+    <script src="static/js/files.js"></script>
+    <!--===============================================================================================-->
+    <script src="static/js/main.js"></script>
+</body>
+</html>
